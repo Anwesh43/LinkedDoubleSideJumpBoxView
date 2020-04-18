@@ -184,4 +184,28 @@ class DoubleSideJumpBoxView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : DoubleSideJumpBoxView) {
+
+        private val animator : Animator = Animator(view)
+        private val djsb : DoubleSideJumpBox = DoubleSideJumpBox(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            djsb.draw(canvas, paint)
+            animator.animate {
+                djsb.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            djsb.startUpdating {
+                animator.start()
+            }
+        }
+
+    }
 }
