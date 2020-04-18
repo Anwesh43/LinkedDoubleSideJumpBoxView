@@ -210,4 +210,12 @@ class DoubleSideJumpBoxView(ctx : Context) : View(ctx) {
         }
 
     }
+
+    companion object {
+        fun create(activity : Activity) : DoubleSideJumpBoxView {
+            val view : DoubleSideJumpBoxView = DoubleSideJumpBoxView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
