@@ -30,8 +30,9 @@ fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 fun Canvas.drawDoubleSideJumpBox(scale : Float, size : Float, w : Float, paint : Paint) {
     val r : Float = size / rFactor
     val sf : Float = scale.sinify()
-    val sc1 : Float = sf.divideScale(0, 1)
+    val sc1 : Float = sf.divideScale(0, 2)
     val sc2 : Float = sf.divideScale(1, 2)
+    drawLine(0f, 0f, (w / 2 - size) * sc1, 0f, paint)
     save()
     translate((w / 2 - size) * sc1, 0f)
     drawRect(RectF(0f, -size / 2, size, size / 2), paint)
