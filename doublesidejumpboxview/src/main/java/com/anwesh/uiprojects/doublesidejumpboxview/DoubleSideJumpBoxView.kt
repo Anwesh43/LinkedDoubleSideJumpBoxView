@@ -26,3 +26,32 @@ fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
+
+fun Canvas.drawDoubleSideJumpBox(scale : Float, size : Float, w : Float, paint : Paint) {
+    val r : Float = size / rFactor
+    val sf : Float = scale.sinify()
+    val sc1 : Float = sf.divideScale(0, 1)
+    val sc2 : Float = sf.divideScale(1, 2)
+    save()
+    translate((w / 2 - size) * sc1, 0f)
+    drawRect(RectF(0f, -size / 2, size, size / 2), paint)
+    save()
+    translate(size + r + (w / 2 - 2 * r) * sc2, 0f)
+    drawCircle(0f, 0f, r, paint)
+    restore()
+    restore()
+}
+
+fun Canvas.drawDSJBNode(i : Int , scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = h / (nodes + 1)
+    val size : Float = gap / sizeFactor
+    paint.color = foreColor
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
+    save()
+    translate(0f, gap * (i + 1))
+    drawDoubleSideJumpBox(scale, size, w, paint)
+    restore()
+}
